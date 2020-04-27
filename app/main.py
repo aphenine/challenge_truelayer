@@ -7,8 +7,12 @@ from flask import Flask
 app = Flask(__name__)
 
 
-def translate_text_shakespearian(text):
-    """Function for translating text into shakespearian text via API call"""
+def translate_text_shakespearian(text: str):
+    """
+    Function for translating text into shakespearian text via API call
+
+    Also helps in mocking out the tests
+    """
     response = requests.post("https://api.funtranslations.com/translate/shakespeare.json", data={"text": text})
     data = json.loads(response.content.decode(response.encoding))
 
