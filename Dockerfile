@@ -18,6 +18,11 @@ ENV STATIC_INDEX 0
 COPY ./app /app
 WORKDIR /app
 
+# Add requirements list
+ADD requirements.txt /
+# Upgrade pip and install requirements via pip
+RUN pip install --upgrade pip && pip install -r /requirements.txt
+
 # Make /app/* available to be imported by Python globally to better support several use cases like Alembic migrations.
 ENV PYTHONPATH=/app
 
