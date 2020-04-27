@@ -16,12 +16,9 @@ def hello():
 def pokeroute(name):
     # Grab the pokemon
     pokemon = pb.pokemon(name)
-    print(pokemon.species.name)
 
     # The descriptions are contained in the species
     species = pb.pokemon_species(pokemon.species.name)
-    print(species)
-    print(species.flavor_text_entries)
 
     # Grab one of the english text flavour entries
     flavour_text = ""
@@ -44,7 +41,6 @@ def pokeroute(name):
     api_response = {
         "name": pokemon.name,
         "description": shakeperian_flavor_text,
-
     }
 
     return api_response
@@ -53,12 +49,3 @@ def pokeroute(name):
 if __name__ == "__main__":
     # Only for debugging while developing
     app.run(host='0.0.0.0', debug=True, port=80)
-
-
-# def application(env, start_response):
-#     version = "{}.{}".format(sys.version_info.major, sys.version_info.minor)
-#     start_response("200 OK", [("Content-Type", "text/plain")])
-#     message = "Hello World from a default Nginx uWSGI Python {} app in a Docker container (default)".format(
-#         version
-#     )
-#     return [message.encode("utf-8")]
