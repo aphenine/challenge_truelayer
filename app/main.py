@@ -4,7 +4,13 @@ import pokebase as pb
 import requests
 
 from flask import Flask
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+# from flask import Flask
+# app = Flask(__name__)
 
 
 def translate_text_shakespearian(text: str):
@@ -16,7 +22,12 @@ def translate_text_shakespearian(text: str):
     response = requests.post("https://api.funtranslations.com/translate/shakespeare.json", data={"text": text})
     data = json.loads(response.content.decode(response.encoding))
 
-    translated_text = data["contents"]["translated"]
+    try:
+        translated_text = data["contents"]["translated"]
+    except Exception as e:
+        print(data)
+        print(e)
+        return "Rate limit exceeded"
 
     return translated_text
 
@@ -28,6 +39,7 @@ def hello():
 
 
 @app.route("/pokemon/<name>")
+@cross_origin()
 def pokeroute(name):
     # Grab the pokemon
     pokemon = pb.pokemon(name)
